@@ -1,8 +1,27 @@
+import {showHome} from "./home.js";
+import {showLogin} from "./login.js";
+import {showRegister} from "./register.js";
+
+
 // create placeholder modules for every view
 //configure and test navigation
 //implement modules
 // - create async functions for requests
 // - implement DOM logic
+
+const views = {
+    'homeLink': showHome,
+    'loginLink': showLogin,
+    'registerLink': showRegister
+};
+
+document.querySelector('nav').addEventListener('click', (event) => {
+    const view = views[event.target.id];
+    if (typeof view == 'function') {
+        event.preventDefault();
+        view();
+    }
+});
 
 // Order of views
 // - catalogue (home view)
@@ -13,12 +32,6 @@
 // - edit
 // - delete
 
-import {showHome} from "./home.js";
-import {showDetails} from "./details.js";
-import {showCreate} from "./create.js";
 
+//start application in home view
 showHome();
-
-window.showHome = showHome;
-window.showDetails = showDetails;
-window.showCreate = showCreate;
