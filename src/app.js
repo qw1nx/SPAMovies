@@ -23,8 +23,12 @@ document.querySelector('nav').addEventListener('click', (event) => {
     }
 });
 
+//start application in home view
+showHome();
+
+
 // Order of views
-// - catalogue (home view)
+// X catalogue (home view)
 // - login register
 // - create
 // - details
@@ -32,6 +36,3 @@ document.querySelector('nav').addEventListener('click', (event) => {
 // - edit
 // - delete
 
-
-//start application in home view
-showHome();

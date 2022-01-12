@@ -11,6 +11,7 @@ section.remove();
 
 //display logic
 
-export function showDetails(){
+export function showDetails(movieId){
     showView(section);
+    console.log(movieId);
 }
