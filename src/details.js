@@ -1,4 +1,4 @@
-import {showView} from "./dom.js";
+import {showView, e} from "./dom.js";
 //initialization
 // - find replacement section
 // - detach section from DOM
@@ -18,15 +18,14 @@ async function getMovie(id){
     section.replaceChildren(e('p', {}, 'Loading....'))
 
     const requests = [
-        await fetch('http://localhost:3030/data/movies' + id),
+        await fetch('http://localhost:3030/data/movies/' + id),
         await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22&distinct=_ownerId&count` + id),
-        //await
     ];
 
     const userD = JSON.parse(sessionStorage.getItem('userData'));
 
     if (userD != null){
-        requests.push(await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22%20and%20_ownerId%3D%22${userD.id}%22`))
+        requests.push(await fetch(`http://localhost:3030/data/likes?where=movieId%3D%22${id}%22%20and%20_ownerId%3D%22${userD.id}%22`));
     }
 
     const [movieRes, likesRes, hasLikedRes] = await Promise.all(requests);
@@ -35,9 +34,7 @@ async function getMovie(id){
         movieRes.json(),
         likesRes.json(),
         hasLikedRes && hasLikedRes.json()
-    ])
-
-    //const data = await res.json()
+    ]);
 
     section.replaceChildren(createDetails(movieData, likes, hasLiked));
 }
@@ -62,7 +59,8 @@ function createDetails(movie, likes, hasLiked){
         }
 
     }
-    controls.appendChild(e('span', {className: 'enrolled-span'}, `Like ${likes}`));
+    //console.log(likes);
+    controls.appendChild(e('span', {className: 'enrolled-span'}, `Like ${likes.length}`));
 
     const element = e('div', {className: 'container'},
         e('div', {className: 'row bg-light text dark'},
